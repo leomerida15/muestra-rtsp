@@ -1,0 +1,32 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Streaming IP Camera Nodejs</title>
+	</head>
+	<body>
+		<div>
+			<h1>hola</h1>
+
+			<canvas id="chanel1" width="auto" height="auto"></canvas>
+
+			<script src="./jsmpeg.min.js"></script>
+			<script>
+				(() => {
+					try {
+						const canvas = document.getElementById('chanel1');
+						const websocket = new WebSocket('ws://localhost:9999');
+						const player = new jsmpeg(websocket, { canvas, autoplay: true, loop: true });
+						console.log(canvas);
+						console.log(websocket);
+						console.log(player);
+						console.log(player.benchmark);
+					} catch (err) {
+						console.error(err);
+					}
+				})();
+			</script>
+		</div>
+	</body>
+</html>
