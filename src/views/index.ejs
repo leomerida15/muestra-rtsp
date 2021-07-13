@@ -9,20 +9,21 @@
 		<div>
 			<h1>hola</h1>
 
-			<canvas id="chanel1" width="auto" height="auto"></canvas>
+			<div id="conten-canvas">
+				<canvas id="chanel1" width="auto" height="auto"></canvas>
+			</div>
 
+			<input
+				id="streamUrl"
+				type="text"
+				value="rtsp://admin:NutrAdm_20.20@190.54.179.123:8082/cam/realmonitor?channel=1>&subtype=1"
+			/>
+			<button id="start">start</button>
+			<button id="stop">stop</button>
+
+			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script src="./jsmpeg.min.js"></script>
-			<script>
-				(() => {
-					try {
-						const canvas = document.getElementById('chanel1');
-						const websocket = new WebSocket('ws://localhost:9999');
-						const player = new jsmpeg(websocket, { canvas, autoplay: true, loop: true });
-					} catch (err) {
-						console.error(err);
-					}
-				})();
-			</script>
+			<script src="./controll.js"></script>
 		</div>
 	</body>
 </html>

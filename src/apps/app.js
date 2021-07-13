@@ -3,6 +3,7 @@ const http = require('http');
 const fs = require('fs/promises');
 const ejs = require('ejs');
 const path = require('path');
+const Stream = require('node-rtsp-stream');
 
 // Motor de plantilla
 app.set('view engine', 'ejs');
@@ -10,6 +11,47 @@ app.set('views', path.resolve('src/views'));
 
 app.get('/', (req, res) => {
 	res.render('index', { titulo: 'inicio EJS' });
+});
+
+const cams = [
+	{
+		streamUrl: `rtsp://admin:NutrAdm_20.20@190.54.179.123:8082/cam/realmonitor?channel=1>&subtype=1`,
+		wsPort: 9999,
+		nombre: 'camara',
+	},
+];
+
+let streams = {};
+
+app.get('/:streamUrl/strat', (req, res) => {
+	try {
+		const { streamUrl } = req.body;
+		console.log('streamUrl');
+		console.log(streamUrl);
+
+		const cam = cams.find((cam) => cam.streamUrl == streamUrl);
+		streams[`${streamUrl}`] = { ...cam, active: new Stream(cam) };
+
+		const url = 'ws://localhost:' + cam.wsPort;
+
+		res.status(200).json({ message: `camara ${cam.wsPort} encendida`, data: { url } });
+	} catch (err) {
+		res.status(400).json({ message: `error al encender la camara ${cam.wsPort}` });
+	}
+});
+
+app.post('/:streamUrl/stop', (req, res) => {
+	try {
+		const { streamUrl } = req.body;
+
+		const cam = cams.find((cam) => cam.streamUrl == streamUrl);
+		const stream = new Stream(cam);
+		stream.stop();
+
+		res.status(200).json({ message: `camara ${cam.wsPort} apagada` });
+	} catch (err) {
+		res.status(400).json({ message: `error al apagar la camara ${cam.wsPort}` });
+	}
 });
 
 // Settings

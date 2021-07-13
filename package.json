@@ -12,10 +12,11 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"ejs": "^3.1.6",
 		"express": "^4.17.1",
 		"node-onvif": "^0.1.7",
-		"node-rtsp-stream": "0.0.4",
+		"node-rtsp-stream": "^0.0.4",
 		"node-rtsp-stream-es6": "^1.0.7"
 	}
 }
