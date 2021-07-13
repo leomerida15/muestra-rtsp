@@ -18,10 +18,6 @@
 						const canvas = document.getElementById('chanel1');
 						const websocket = new WebSocket('ws://localhost:9999');
 						const player = new jsmpeg(websocket, { canvas, autoplay: true, loop: true });
-						console.log(canvas);
-						console.log(websocket);
-						console.log(player);
-						console.log(player.benchmark);
 					} catch (err) {
 						console.error(err);
 					}
