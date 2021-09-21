@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const { cams, streams, addstreamUrl } = require('../data');
-const Stream = require('node-rtsp-stream');
+import { cams, streams, addstreamUrl } from '../data';
+// @ts-expect-error
+import Stream from 'node-rtsp-stream';
+import { Request, Response, Application } from 'express';
 
-router.post('/start', (req, res) => {
+router.post('/start', (req: Request, res: Response) => {
 	try {
 		const { streamUrl } = req.body;
 
@@ -11,7 +13,7 @@ router.post('/start', (req, res) => {
 		console.log('streamUrl');
 		console.log(streamUrl);
 
-		const cam = cams.find((cam) => cam.streamUrl == streamUrl);
+		const cam: any = cams.find((cam) => cam.streamUrl == streamUrl);
 		streams[`${streamUrl}`] = new Stream(cam);
 
 		const url = 'ws://localhost:' + cam.wsPort;
@@ -24,7 +26,7 @@ router.post('/start', (req, res) => {
 	}
 });
 
-router.post('/stop', (req, res) => {
+router.post('/stop', (req: Request, res: Response) => {
 	try {
 		const { streamUrl } = req.body;
 
@@ -41,6 +43,6 @@ router.post('/stop', (req, res) => {
 	}
 });
 
-module.exports = (app) => {
+export default (app: Application) => {
 	app.use(router);
 };

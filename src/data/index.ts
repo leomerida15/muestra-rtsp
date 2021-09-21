@@ -1,4 +1,4 @@
-const cams = [
+export const cams = [
 	{
 		streamUrl: `rtsp://admin:NutrAdm_20.20@190.54.179.123:8082/cam/realmonitor?channel=1>&subtype=1`,
 		wsPort: 9999,
@@ -6,9 +6,9 @@ const cams = [
 	},
 ];
 
-let streams = {};
+export let streams: any = {};
 
-const addstreamUrl = (streamUrl) => {
+export const addstreamUrl = (streamUrl: any) => {
 	const urls = cams.map((cam) => cam.streamUrl);
 
 	if (!urls.includes(streamUrl)) {
@@ -19,5 +19,3 @@ const addstreamUrl = (streamUrl) => {
 		});
 	}
 };
-
-module.exports = { cams, streams, addstreamUrl };
