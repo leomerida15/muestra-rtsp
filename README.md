@@ -14,12 +14,9 @@
 
 <p>    En la arpeta POST se encuentra la documentacion de postman, la cual cuenta con tres endPoint que se lista de la siguiente forma
     <br/>
-* iniciar la tranmicion de una camara
-    <br/>
+* iniciar la tranmicion de una camara <br/>
 * detener la tranmicion de una camara    <br/>
-
-* listar las camaras que estan transmitiendo
-    <br/>
+* listar las camaras que estan transmitiendo <br/>
 <p/>
 
 
