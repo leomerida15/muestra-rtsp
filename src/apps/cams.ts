@@ -21,8 +21,4 @@ app.set('port', process.env.PORT || 5051);
 
 // print process.argv
 
-app.listen(app.get('port'), () => {
-	console.log('                                                                  ()_()');
-	console.log(`app corriendo en el puerto http://localhost:${app.get('port')} leoM             (o.o)`);
-	console.log('                                                                  (|_|)*');
-});
+export default app;
