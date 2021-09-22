@@ -3,3 +3,5 @@ export interface cam {
 	wsPort: number;
 	nombre: string;
 }
+
+export * as Api from './Api';

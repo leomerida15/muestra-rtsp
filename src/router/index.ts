@@ -1,41 +1,63 @@
 const router = require('express').Router();
-import { cams, streams, addstreamUrl } from '../data';
 // @ts-expect-error
 import Stream from 'node-rtsp-stream';
 import { Request, Response, Application } from 'express';
+import { Api } from '../interface';
 
-router.post('/start', (req: Request, res: Response) => {
+const db: any = {};
+
+const ffmpegOptions: any = { '-r': 30 };
+
+router.post('/start/:wsPort', (req: Request<Api.id, Api.Resp, Api.body>, res: Response<Api.Resp>): void => {
 	try {
 		const { streamUrl } = req.body;
+		const wsPort: number = parseInt(`${req.params.wsPort}`);
 
-		addstreamUrl(streamUrl);
+		const valid = Object.keys(db).length;
+		if (valid) throw { message: `el puerto ${wsPort} ya esta ocupado`, info: { url: 'ws://localhost:' + wsPort } };
 
-		console.log('streamUrl');
-		console.log(streamUrl);
+		const cam: any = new Stream({ streamUrl, wsPort, ffmpegOptions });
 
-		const cam: any = cams.find((cam) => cam.streamUrl == streamUrl);
-		streams[`${streamUrl}`] = new Stream(cam);
+		db[wsPort] = { streamUrl, wsPort, ffmpegOptions, cam };
 
-		const url = 'ws://localhost:' + cam.wsPort;
+		const url: string = 'ws://localhost:' + cam.wsPort;
 
-		res.status(200).json({ message: `camara ${cam.wsPort} encendida`, info: { url } });
-	} catch (err) {
-		console.clear();
-		console.log(err);
-		res.status(400).json({ message: `error al encender la camara` });
+		setTimeout(() => res.status(200).json({ message: `camara ${cam.wsPort} encendida`, info: { url } }), 30000);
+	} catch (err: any) {
+		console.log('err', err);
+
+		res.status(400).json(err);
 	}
 });
 
-router.post('/stop', (req: Request, res: Response) => {
+router.delete('/stop/:wsPort', (req: Request<Api.id, Api.Resp>, res: Response<Api.Resp>): void => {
 	try {
-		const { streamUrl } = req.body;
+		const wsPort: number = parseInt(`${req.params.wsPort}`);
 
-		console.log('streamUrl');
-		console.log(streamUrl);
+		const valid = Object.keys(db).length;
+		if (!valid) throw { message: `el puerto ${wsPort} no esta ocupado` };
 
-		streams[`${streamUrl}`].stop();
+		db[wsPort].cam.stop();
 
-		res.status(200).json({ message: `camara apagada` });
+		delete db[wsPort];
+
+		console.clear();
+
+		console.log('db', db);
+
+		res.status(200).json({ message: `camara ${wsPort} a sido apagada encendida` });
+	} catch (err: any) {
+		console.log('err', err);
+
+		res.status(400).json(err);
+	}
+});
+
+router.get('/wsPorts', (req: Request<Api.id, Api.Resp, Api.body>, res: Response<Api.Resp>): void => {
+	try {
+		const wsPorts: number[] = Object.keys(db).map((key: any) => key);
+
+		res.status(200).json({ message: `camara apagada`, info: { wsPorts } });
 	} catch (err) {
 		console.clear();
 		console.log(err);
