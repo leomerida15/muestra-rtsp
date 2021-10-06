@@ -7,15 +7,19 @@
 <p>  
     Con para usar "yarn" remplace npm run y npm i -> yarn
     <br/>
+    <br/>
     > Instalamos ts-node y typescript de manera global
     npm i ts-node typescript -g
+    <br/>
     <br/>
     > Instalamos los paquetes del package.json
     npm i
     <br/>
+    <br/>
     > Iniciamos la Api
     npm start
-    
+    <br/>
+    <br/>
 <p/>
 
 <h2>Comandos</h2>
