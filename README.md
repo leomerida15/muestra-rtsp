@@ -27,6 +27,7 @@
 <p>   
     npm start -> Para iniciar el proyecto
     <br/>
+    <br/>
     npm run test -> para abrir un front en el puerto 5050 para consumir las camaras
 <p/>
 
@@ -34,9 +35,16 @@
 
 <p>    En la arpeta POST se encuentra la documentacion de postman, la cual cuenta con tres endPoint que se lista de la siguiente forma
     <br/>
-* iniciar la tranmicion de una camara <br/>
-* detener la tranmicion de una camara    <br/>
-* listar las camaras que estan transmitiendo <br/>
+    <br/>
+    * iniciar la tranmicion de una camara     
+    <br/>
+    <br/>
+    * detener la tranmicion de una camara    
+    <br/>
+    <br/>
+    * listar las camaras que estan transmitiendo 
+    <br/>
+    <br/>
 <p/>
 
 
