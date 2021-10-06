@@ -11,14 +11,19 @@ const ffmpegOptions: any = { '-r': 30 };
 router.post('/start/:wsPort', (req: Request<Api.id, Api.Resp, Api.body>, res: Response<Api.Resp>): void => {
 	try {
 		const { streamUrl } = req.body;
-		const wsPort: number = parseInt(`${req.params.wsPort}`);
+		console.log('streamUrl', streamUrl);
 
-		const valid = Object.keys(db).length;
+		const wsPort: number = parseInt(`${req.params.wsPort}`);
+		console.log('wsPort', wsPort);
+
+		const valid = Object.keys(db).includes(`${wsPort}`);
 		if (valid) throw { message: `el puerto ${wsPort} ya esta ocupado`, info: { url: 'ws://localhost:' + wsPort } };
 
 		const cam: any = new Stream({ streamUrl, wsPort, ffmpegOptions });
+		console.log('cam', cam);
 
 		db[wsPort] = { streamUrl, wsPort, ffmpegOptions, cam };
+		console.log('db', db);
 
 		const url: string = 'ws://localhost:' + cam.wsPort;
 

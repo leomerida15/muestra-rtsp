@@ -6,8 +6,8 @@
 	"scripts": {
 		"serve_api": "nodemon src/apps/app.ts",
 		"serve_cams": "nodemon src/apps/cams.ts",
-		"test": "yarn ts-node src/test.ts",
-		"start": "yarn ts-node src/app.ts"
+		"test": "ts-node src/test.ts",
+		"start": "ts-node src/app.ts"
 	},
 	"keywords": [],
 	"author": "",
