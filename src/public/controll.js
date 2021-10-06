@@ -3,23 +3,17 @@
 		const start = async () => {
 			try {
 				const streamUrl = document.querySelector('#streamUrl').value;
-				alert(streamUrl);
-				// const streamUrl = `rtsp://admin:NutrAdm_20.20@190.54.179.123:8082/cam/realmonitor?channel=1>&subtype=1`;
-				const body = { streamUrl };
+				const wsPorts = document.querySelector('#wsPorts').value;
 
-				const resp = await axios.post('http://localhost:5051/start', { streamUrl });
+				const resp = await axios.post('http://localhost:5051/start/' + wsPorts, { streamUrl });
 
-				setTimeout(() => {
-					const canvas = document.getElementById(`chanel1`);
+				const canvas = document.getElementById(`chanel1`);
 
-					const websocket = new WebSocket(resp.data.info.url);
+				const websocket = new WebSocket(resp.data.info.url);
 
-					console.log(websocket);
-
-					new jsmpeg(websocket, { canvas, autoplay: true, loop: true });
-				}, 5000);
+				new jsmpeg(websocket, { canvas, autoplay: true, loop: true });
 			} catch (err) {
-				console.error(err);
+				console.log(err.response.data.message);
 			}
 		};
 
@@ -27,10 +21,9 @@
 
 		const stop = async () => {
 			try {
-				const streamUrl = `rtsp://admin:NutrAdm_20.20@190.54.179.123:8082/cam/realmonitor?channel=1>&subtype=1`;
-				const body = { streamUrl };
+				const wsPorts = document.querySelector('#wsPorts').value;
 
-				const resp = await axios.post('http://localhost:5051/stop', body);
+				await axios.delete('http://localhost:5051/stop/' + wsPorts);
 
 				const conten = document.getElementById(`conten-canvas`);
 
