@@ -8,7 +8,8 @@
 		"serve_cams": "nodemon src/apps/cams.ts",
 		"test": "ts-node src/test.ts",
 		"start": "ts-node src/app.ts",
-		"build": "tsc"
+		"build": "tsc",
+		"dev": "tsc-watch --onSuccess \"node dist/index.js\""
 	},
 	"keywords": [],
 	"author": "",
