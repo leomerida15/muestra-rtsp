@@ -5,7 +5,7 @@
 				const streamUrl = document.querySelector('#streamUrl').value;
 				const wsPorts = document.querySelector('#wsPorts').value;
 
-				const resp = await axios.post('http://localhost:5051/start/' + wsPorts, { streamUrl });
+				const resp = await axios.post('http://161.35.194.208:5051/start/' + wsPorts, { streamUrl });
 
 				const canvas = document.getElementById(`chanel1`);
 
@@ -23,7 +23,7 @@
 			try {
 				const wsPorts = document.querySelector('#wsPorts').value;
 
-				await axios.delete('http://localhost:5051/stop/' + wsPorts);
+				await axios.delete('http://161.35.194.208:5051/stop/' + wsPorts);
 
 				const conten = document.getElementById(`conten-canvas`);
 
