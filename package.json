@@ -7,7 +7,8 @@
 		"serve_api": "nodemon src/apps/app.ts",
 		"serve_cams": "nodemon src/apps/cams.ts",
 		"test": "ts-node src/test.ts",
-		"start": "ts-node src/app.ts"
+		"start": "ts-node src/app.ts",
+		"postinstall": "tsc-watch"
 	},
 	"keywords": [],
 	"author": "",
