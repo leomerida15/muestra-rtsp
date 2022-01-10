@@ -4,6 +4,10 @@ import Stream from 'node-rtsp-stream';
 import { Request, Response, Application } from 'express';
 import { Api } from '../interface';
 
+
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 const db: any = {};
 
 const ffmpegOptions: any = { '-r': 30 };
@@ -21,7 +25,14 @@ router.post('/start/:wsPort', (req: Request<Api.id, Api.Resp, Api.body>, res: Re
 
 		db[wsPort] = { streamUrl, wsPort, ffmpegOptions, cam };
 
-		const url: string = 'ws://161.35.194.208:' + cam.wsPort;
+		//const url: string = 'ws://161.35.194.208:' + cam.wsPort;
+
+		const url: string =  `ws://${process.env.HOST}:${cam.wsPort}`;
+		console.log('========================')
+		console.log('url:',url)
+		console.log('cam.wsPort:',cam.wsPort)
+		console.log('wsPort:',wsPort)
+		console.log('========================')
 
 		setTimeout(() => res.status(200).json({ message: `camara ${cam.wsPort} encendida`, info: { url } }), 30000);
 	} catch (err: any) {
